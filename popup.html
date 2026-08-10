@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>Preserve Vault</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── HEADER ─────────────────────────────── -->
+    <header class="header">
+      <div class="brand">
+        <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" rx="18" fill="#0f172a"/>
+          <path d="M29 51 L29 33 C29 14 71 14 71 33 L71 51" stroke="#06090f" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M29 51 L29 33 C29 14 71 14 71 33 L71 51" stroke="#4ade80" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="12" y="46" width="76" height="47" rx="11" fill="#06090f"/>
+          <rect x="16" y="50" width="68" height="40" rx="8" fill="#94a3b8"/>
+          <rect x="16" y="50" width="68" height="13" rx="8" fill="#e2e8f0"/>
+          <circle cx="50" cy="68" r="7.5" fill="#1e293b"/>
+          <rect x="47" y="74" width="6" height="9" rx="3" fill="#1e293b"/>
+        </svg>
+        <span class="brand-name">Preserve Vault</span>
+      </div>
+      <div class="header-right">
+        <div id="status-pill" class="status-pill active">
+          <span class="dot"></span><span id="status-text">Active</span>
+        </div>
+        <button id="btn-theme" class="icon-btn" title="Toggle theme">
+          <svg id="ico-moon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg id="ico-sun"  width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none"><circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="2"><line x1="12" y1="1"  x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── PROTECTION STATUS ───────────────────── -->
+    <div id="protect-card" class="protect-card">
+      <div class="protect-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      </div>
+      <div class="protect-info">
+        <div class="protect-title" id="protect-title">Scanning…</div>
+        <div class="protect-sub" id="protect-sub">Checking this page</div>
+      </div>
+      <div id="save-badge" class="save-badge hidden">Saving…</div>
+    </div>
+
+    <!-- ── STATS ROW ───────────────────────────── -->
+    <div class="stats-row">
+      <div class="stat-chip">
+        <div class="chip-val" id="stat-drafts">—</div>
+        <div class="chip-lbl">Drafts</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-chip">
+        <div class="chip-val" id="stat-fields">—</div>
+        <div class="chip-lbl">Fields</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-chip">
+        <div class="chip-val" id="stat-restored">—</div>
+        <div class="chip-lbl">Restored</div>
+      </div>
+    </div>
+
+    <!-- ── LAST DRAFT PREVIEW ─────────────────── -->
+    <div class="section-label">Last Saved Draft</div>
+    <div id="last-draft-card" class="last-draft-card hidden">
+      <div class="last-draft-top">
+        <div class="last-draft-site" id="last-site">—</div>
+        <div class="last-draft-time" id="last-time">—</div>
+      </div>
+      <div class="last-draft-text" id="last-text">—</div>
+    </div>
+    <div id="no-draft-msg" class="no-draft-msg">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span>No drafts yet — start typing on any page</span>
+    </div>
+
+    <!-- ── QUICK ACTIONS ──────────────────────── -->
+    <div class="section-label">Quick Actions</div>
+    <div class="actions">
+      <button id="btn-save-now" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+        Save Now
+      </button>
+      <button id="btn-restore-last" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+        Restore
+      </button>
+    </div>
+    <button id="btn-dashboard" class="btn-full">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+      Open Full Dashboard
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="arrow"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+
+    <!-- ── TOAST ──────────────────────────────── -->
+    <div id="toast" class="toast"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
